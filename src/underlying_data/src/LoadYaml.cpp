@@ -169,7 +169,7 @@ void LoadYaml::parseFromBytes(const std::string& raw_payload) {
     }
 }
 
-void LoadYaml::fill_msg(All_data_merging::SerialData& msg) {
+void LoadYaml::fill_msg(underlying_data::SerialData& msg) {
     // 设置header
     msg.header.stamp = ros::Time::now();
     msg.header.frame_id = "serial_frame";
