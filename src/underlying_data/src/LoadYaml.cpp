@@ -143,6 +143,7 @@ void LoadYaml::parseFromBytes(const std::string& raw_payload) {
         if (field_type == "int32_t") {
             int32_t* ptr = (int32_t*)data_ptr;
             parsed_value = static_cast<double>(*ptr);
+            parsed_value = parsed_value/1000.0;
         } else if (field_type == "uint32_t") {
             uint32_t* ptr = (uint32_t*)data_ptr;
             parsed_value = static_cast<double>(*ptr);
