@@ -139,7 +139,11 @@ void LoadYaml::parseFromBytes(const std::string& raw_payload) {
         // 直接从字节数据中读取数值
         double parsed_value = 0.0;
         const char* data_ptr = raw_payload.data() + byte_offset;
-        
+
+        //int32_t tmp;
+        //memcpy(&tmp, data_ptr, sizeof(int32_t));
+        //parsed_value = static_cast<double>(tmp) / 1000.0;
+                
         if (field_type == "int32_t") {
             int32_t* ptr = (int32_t*)data_ptr;
             parsed_value = static_cast<double>(*ptr);
