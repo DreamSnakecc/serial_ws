@@ -1,4 +1,4 @@
-#include "All_data_merging/LoadYaml.h"
+#include "underlying_data/LoadYaml.h"
 #include <sstream>
 #include <iomanip>
 
@@ -16,7 +16,7 @@ void LoadYaml::loadYamlConfig() {
     
     try {
         // 使用ROS包路径查找配置文件
-        std::string package_path = ros::package::getPath("All_data_merging");
+        std::string package_path = ros::package::getPath("underlying_data");
         std::string config_file = package_path + "/config/serial_frame_format.yaml";
         
         // 加载YAML配置
