@@ -53,7 +53,7 @@ void SerialData_parser() {
                 load_yaml.parseFromBytes(valid_payload);
                 
                 // 发布消息
-                All_data_merging::SerialData info_msg;
+                underlying_data::SerialData info_msg;
                 load_yaml.fill_msg(info_msg);
                 serial_data_pub.publish(info_msg);
 
