@@ -178,7 +178,7 @@ void LoadYaml::fill_msg(underlying_data::SerialData& msg) {
     msg.data_fields.clear();
     msg.data_fields.reserve(data_names_.size());
     for (size_t i = 0; i < data_names_.size() && i < data_values_.size(); ++i) {
-        All_data_merging::Name_Value named_value;
+        underlying_data::Name_Value named_value;
         named_value.name = data_names_[i];
         named_value.value = data_values_[i];
         msg.data_fields.push_back(named_value);
