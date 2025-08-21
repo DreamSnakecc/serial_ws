@@ -1,5 +1,5 @@
-#include "All_data_merging/serial_debug.h"
-#include "All_data_merging/SerialData.h"
+#include "underlying_data/serial_debug.h"
+#include "underlying_data/SerialData.h"
 #include <thread>
 #include <mutex>
 #include <condition_variable>
@@ -36,7 +36,7 @@ int main(int argc, char** argv)
     serial_debug.SerialInit(argv[1]);
 
     //初始化发布器
-    serial_data_pub = nh.advertise<All_data_merging::SerialData>("/serial_data",1);
+    serial_data_pub = nh.advertise<underlying_data::SerialData>("/serial_data",1);
 
     //command串口读取定时器(周期为5ms),创建一个线程执行耗时操作
     std::thread worker(SerialData_parser);
@@ -46,4 +46,5 @@ int main(int argc, char** argv)
     
     return 0;
 }
+
 
