@@ -8,8 +8,8 @@
 #include <ros/ros.h>
 #include <fstream>
 #include <ros/package.h>
-#include "All_data_merging/SerialData.h"
-#include "All_data_merging/Name_Value.h"
+#include "underlying_data/SerialData.h"
+#include "underlying_data/Name_Value.h"
 
 
 
@@ -34,7 +34,7 @@ public:
     void parseFromBytes(const std::string& raw_payload);
     
     // 填充ROS消息
-    void fill_msg(All_data_merging::SerialData& msg);
+    void fill_msg(underlying_data::SerialData& msg);
         
     void scan_header_footer();
 };
