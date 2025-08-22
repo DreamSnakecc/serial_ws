@@ -75,30 +75,53 @@ void LoadYaml::Load_name()
     data_types_.clear();  // 清空之前的数据类型
     
     // 动态读取所有设备和字段名称
-    for (auto devices = payload_fields.begin(); devices != payload_fields.end(); ++devices) {
-        std::string device_name = devices->first.as<std::string>();
-        device_names_.push_back(device_name);  // 添加设备名称到数组
+    // for (auto devices = payload_fields.begin(); devices != payload_fields.end(); ++devices) {
+    //     std::string device_name = devices->first.as<std::string>();
+    //     device_names_.push_back(device_name);  // 添加设备名称到数组
         
-        auto device_data = devices->second;
+    //     auto device_data = devices->second;
         
-        // 检查设备节点的类型
-        if (device_data.IsMap()) {
-            // 如果是Map类型，遍历其子字段
-            for (auto data = device_data.begin(); data != device_data.end(); ++data) {
-                std::string data_name = data->first.as<std::string>();
-                std::string data_type = data->second.as<std::string>();
+    //     // 检查设备节点的类型
+    //     if (device_data.IsMap()) {
+    //         // 如果是Map类型，遍历其子字段
+    //         for (auto data = device_data.begin(); data != device_data.end(); ++data) {
+    //             std::string data_name = data->first.as<std::string>();
+    //             std::string data_type = data->second.as<std::string>();
                 
-                // 添加字段名称和类型信息
-                data_names_.push_back(device_name + "_" + data_name);
-                data_types_.push_back(data_type); 
-            }
-        } else {
-            // 如果是简单类型，直接使用设备名称
-            std::string data_type = device_data.as<std::string>();
-            data_names_.push_back(device_name);
-            data_types_.push_back(data_type);  
+    //             // 添加字段名称和类型信息
+    //             data_names_.push_back(device_name + "_" + data_name);
+    //             data_types_.push_back(data_type); 
+    //         }
+    //     } else {
+    //         // 如果是简单类型，直接使用设备名称
+    //         std::string data_type = device_data.as<std::string>();
+    //         data_names_.push_back(device_name);
+    //         data_types_.push_back(data_type);  
+    //     }
+    // }   
+    for (auto device : payload_fields) {
+    if (device["fields"]) {
+        // 这是带子字段的设备，比如 Motor_1
+        std::string device_name = device["name"].as<std::string>();
+        device_names_.push_back(device_name);
+
+        for (auto field : device["fields"]) {
+            std::string data_name = field["name"].as<std::string>();
+            std::string data_type = field["type"].as<std::string>();
+
+            data_names_.push_back(device_name + "_" + data_name);
+            data_types_.push_back(data_type);
         }
-    }      
+    } else {
+        // 这是简单字段，比如 Adsorb_1
+        std::string device_name = device["name"].as<std::string>();
+        std::string data_type   = device["type"].as<std::string>();
+
+        device_names_.push_back(device_name);
+        data_names_.push_back(device_name);
+        data_types_.push_back(data_type);
+    }
+}
     // 打印所有读取到的数据名称和类型
     ROS_INFO("Data fields loaded from YAML: ");
     for (size_t i = 0; i < data_names_.size(); ++i) {
